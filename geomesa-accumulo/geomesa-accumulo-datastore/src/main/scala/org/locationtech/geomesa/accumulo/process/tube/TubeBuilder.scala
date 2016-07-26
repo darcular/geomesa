@@ -67,14 +67,9 @@ abstract class TubeBuilder(val tubeFeatures: SimpleFeatureCollection,
     builder.buildFeature(sf.getID)
   }
 
-  import scala.collection.JavaConversions._
+  import org.locationtech.geomesa.utils.geotools.RichSimpleFeatureType._
 
-  def extractDtgField(sft: SimpleFeatureType) =
-    sft.getAttributeDescriptors
-      .filter { _.getUserData.contains(Constants.SF_PROPERTY_START_TIME) }
-      .headOption
-      .map { _.getName.toString }
-      .getOrElse(DEFAULT_DTG_FIELD)
+  def extractDtgField(sft: SimpleFeatureType) = sft.getDtgField.getOrElse(DEFAULT_DTG_FIELD)
 
   // transform the input tubeFeatures into the intermediate SF used by the
   // tubing code consisting of three attributes (geom, startTime, endTime)
