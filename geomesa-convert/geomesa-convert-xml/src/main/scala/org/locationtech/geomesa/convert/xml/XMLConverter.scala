@@ -44,7 +44,7 @@ class XMLConverter(val targetSFT: SimpleFeatureType,
       "net.sf.saxon.dom.DocumentBuilderFactoryImpl")
 */
     val factory = DocumentBuilderFactory.newInstance()
-    factory.setNamespaceAware(false)
+    factory.setNamespaceAware(true)
     factory.newDocumentBuilder()
   }
   private val validator = xsd.map { path =>
@@ -83,7 +83,7 @@ class XMLConverterFactory extends AbstractSimpleFeatureConverterFactory[String] 
     XPathFactory.newInstance(
       XPathFactory.DEFAULT_OBJECT_MODEL_URI,
       "net.sf.saxon.xpath.XPathFactoryImpl",
-      ClassLoader.getSystemClassLoader).newXPath()
+      classOf[XMLConverterFactory].getClassLoader).newXPath()
 
   override protected val typeToProcess = "xml"
 
